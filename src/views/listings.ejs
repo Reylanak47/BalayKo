@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <%- include('partials/_head') %>
+  <body class="container">
+    <%- include('partials/_header') %>
+
+    <main class="container">
+      <h1>Listings</h1>
+
+      <% if (!listings || listings.length === 0) { %>
+        <p>No listings yet. (Run <code>npm run seed</code> to insert sample data.)</p>
+      <% } else { %>
+        <div class="grid">
+          <% listings.forEach(function(l){ 
+               const photos = JSON.parse(l.photosJson || "[]");
+               const img = photos[0] || "/img/placeholder.jpg";
+          %>
+            <article class="card">
+              <img src="<%= img %>" alt="<%= l.title %>" />
+              <h2><%= l.title %></h2>
+              <p>₱<%= l.price %> / mo — <%= l.city %></p>
+              <p><small><%= l.address %></small></p>
+              <p><small>~<%= Math.round(l.distanceM / 1000) %> km to campus</small></p>
+              <p class="tags"><%= l.amenities %></p>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+    </main>
+
+    <%- include('partials/_footer') %>
+  </body>
+</html>

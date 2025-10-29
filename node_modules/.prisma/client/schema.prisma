@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  role      String    @default("TENANT") // ADMIN | OWNER | TENANT
+  createdAt DateTime  @default(now())
+  listings  Listing[] @relation("OwnerListings")
+}
+
+model Listing {
+  id         Int      @id @default(autoincrement())
+  title      String
+  price      Int
+  address    String
+  city       String
+  distanceM  Int
+  amenities  String
+  photosJson String
+  createdAt  DateTime @default(now())
+  ownerId    Int
+  owner      User     @relation("OwnerListings", fields: [ownerId], references: [id])
+}

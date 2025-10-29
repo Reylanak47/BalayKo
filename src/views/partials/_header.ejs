@@ -1,0 +1,15 @@
+<header class="site-header">
+  <nav class="nav">
+    <a href="/" class="brand">BalayKo</a>
+    <a href="/listings">Listings</a>
+    <% if (locals.user?.role === 'ADMIN') { %>
+      <a href="/admin">Admin</a>
+    <% } %>
+    <% if (locals.user?.role === 'OWNER') { %>
+      <a href="/owner">Owner</a>
+    <% } %>
+    <% if (locals.user?.role === 'TENANT') { %>
+      <a href="/tenant">Tenant</a>
+    <% } %>
+  </nav>
+</header>
